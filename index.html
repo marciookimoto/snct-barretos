@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>XII SNCT IFSP Barretos</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:#f4f7fb;
+      color:#222;
+    }
+
+    header{
+      background:linear-gradient(135deg,#006b3f,#009b5a);
+      color:white;
+      padding:50px 20px;
+      text-align:center;
+    }
+
+    header h1{
+      font-size:40px;
+      margin-bottom:10px;
+    }
+
+    header h2{
+      font-size:24px;
+      margin-bottom:20px;
+      font-weight:normal;
+    }
+
+    header p{
+      max-width:1100px;
+      margin:auto;
+      line-height:1.7;
+      font-size:17px;
+    }
+
+    .container{
+      width:95%;
+      max-width:1400px;
+      margin:40px auto;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:25px;
+    }
+
+    .card{
+      background:white;
+      border-radius:18px;
+      padding:30px;
+      box-shadow:0 5px 20px rgba(0,0,0,0.1);
+      transition:0.3s;
+      border-top:8px solid #009b5a;
+    }
+
+    .card:hover{
+      transform:translateY(-5px);
+    }
+
+    .card h3{
+      margin-bottom:15px;
+      color:#006b3f;
+      font-size:24px;
+    }
+
+    .card p{
+      margin-bottom:20px;
+      line-height:1.6;
+    }
+
+    .card button{
+      width:100%;
+      padding:14px;
+      border:none;
+      background:#009b5a;
+      color:white;
+      border-radius:10px;
+      cursor:pointer;
+      font-size:16px;
+      font-weight:bold;
+    }
+
+    .card button:hover{
+      background:#006b3f;
+    }
+
+    .form-section{
+      display:none;
+      background:white;
+      margin-top:40px;
+      padding:40px;
+      border-radius:20px;
+      box-shadow:0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .form-section.active{
+      display:block;
+    }
+
+    .form-section h2{
+      margin-bottom:25px;
+      color:#006b3f;
+    }
+
+    form{
+      display:grid;
+      gap:20px;
+    }
+
+    label{
+      font-weight:bold;
+      margin-bottom:5px;
+      display:block;
+    }
+
+    input,
+    textarea,
+    select{
+      width:100%;
+      padding:12px;
+      border:1px solid #ccc;
+      border-radius:8px;
+      font-size:15px;
+    }
+
+    textarea{
+      min-height:120px;
+      resize:vertical;
+    }
+
+    .radio-group,
+    .checkbox-group{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .submit-btn{
+      background:#2e7d32;
+      color:white;
+      border:none;
+      padding:15px;
+      font-size:18px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:bold;
+      transition:0.2s;
+    }
+
+    .submit-btn:hover{
+      background:#1b5e20;
+    }
+
+    .submit-btn:disabled{
+      background:#888;
+      cursor:not-allowed;
+    }
+
+    .success{
+      display:none;
+      margin-top:20px;
+      padding:20px;
+      border-radius:10px;
+      background:#e8f5e9;
+      color:#1b5e20;
+      font-weight:bold;
+    }
+
+    .error-msg{
+      display:none;
+      margin-top:20px;
+      padding:20px;
+      border-radius:10px;
+      background:#ffebee;
+      color:#c62828;
+      font-weight:bold;
+    }
+
+    .inscricao-numero{
+      background:#e8f5e9;
+      padding:15px;
+      border-radius:10px;
+      font-weight:bold;
+      color:#006b3f;
+      margin-bottom:20px;
+    }
+
+    @media(max-width:768px){
+      header h1{
+        font-size:28px;
+      }
+
+      .form-section{
+        padding:20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>XII Semana Nacional de Ciência e Tecnologia</h1>
+  <h2>IFSP Campus Barretos • 19 a 23 de outubro de 2026</h2>
+  <p>
+    Com presença em todas as regiões paulistas, o Instituto Federal de São Paulo (IFSP)
+    tem como missão promover a inclusão e a formação cidadã por meio da educação profissional,
+    científica e tecnológica. Ao gerar e difundir conhecimentos inovadores, o Instituto
+    contribui diretamente para o desenvolvimento socioeconômico e cultural do país.
+
+    Em 2026, o Campus Barretos realiza a sua XII edição da Semana Nacional de Ciência e
+    Tecnologia com o tema central:
+    <strong>"Ciência Delas"</strong>.
+  </p>
+</header>
+
+<div class="container">
+
+  <div class="cards">
+
+    <div class="card">
+      <h3>Salão de Inovação</h3>
+      <p>Inscrição de trabalhos científicos para apresentação no Salão de Inovação.</p>
+      <button onclick="abrirFormulario('salao')">Fazer Inscrição</button>
+    </div>
+
+    <div class="card">
+      <h3>MCTI</h3>
+      <p>Inscrição de trabalhos e projetos para participação na mostra MCTI.</p>
+      <button onclick="abrirFormulario('mcti')">Fazer Inscrição</button>
+    </div>
+
+    <div class="card">
+      <h3>Visitantes MCTI</h3>
+      <p>Cadastro de escolas e visitantes para participação nas atividades do evento.</p>
+      <button onclick="abrirFormulario('visitante')">Fazer Inscrição</button>
+    </div>
+
+    <div class="card">
+      <h3>Competição de Foguetes</h3>
+      <p>Inscrição de equipes participantes da competição de foguetes.</p>
+      <button onclick="abrirFormulario('foguete')">Fazer Inscrição</button>
+    </div>
+
+  </div>
+
+  <!-- ========== FORM SALÃO DE INOVAÇÃO ========== -->
+  <div class="form-section" id="salao">
+
+    <h2>Inscrição Salão de Inovação</h2>
+
+    <div class="inscricao-numero">
+      Número de inscrição: <span id="numeroSalao">será gerado após o envio</span>
+    </div>
+
+    <form id="formSalao">
+
+      <div>
+        <label>Nome do aluno</label>
+        <input type="text" id="nomeSalao" required>
+      </div>
+
+      <div>
+        <label>E-mail</label>
+        <input type="email" id="emailSalao" required>
+      </div>
+
+      <div>
+        <label>Título do trabalho</label>
+        <input type="text" id="tituloSalao" required>
+      </div>
+
+      <div>
+        <label>Orientador</label>
+        <input type="text" id="orientadorSalao" required>
+      </div>
+
+      <div>
+        <label>E-mail orientador</label>
+        <input type="email" id="emailOrientadorSalao" required>
+      </div>
+
+      <div>
+        <label>Coorientador (opcional)</label>
+        <input type="text" id="coorientadorSalao">
+      </div>
+
+      <div>
+        <label>Área</label>
+        <div class="radio-group">
+          <label>
+            <input type="radio" name="areaSalao" value="Ciências Biológicas, Ciências Agrárias ou Ciências da Saúde" required>
+            Ciências Biológicas, Ciências Agrárias ou Ciências da Saúde
+          </label>
+          <label>
+            <input type="radio" name="areaSalao" value="Ciências Exatas e da Terra ou Engenharias">
+            Ciências Exatas e da Terra ou Engenharias
+          </label>
+          <label>
+            <input type="radio" name="areaSalao" value="Ciências Sociais Aplicadas, Ciências Humanas, Linguística, Letras ou Artes">
+            Ciências Sociais Aplicadas, Ciências Humanas, Linguística, Letras ou Artes
+          </label>
+        </div>
+      </div>
+
+      <div>
+        <label>Modalidade</label>
+        <select id="modalidadeSalao" required>
+          <option value="">Selecione</option>
+          <option value="PIBIFSP">PIBIFSP</option>
+          <option value="PIVICT">PIVICT</option>
+          <option value="PACTEC">PACTEC</option>
+          <option value="CNPq">CNPq</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Resumo do trabalho (até 200 caracteres)</label>
+        <textarea id="resumoSalao" minlength="1" maxlength="200" required></textarea>
+        <small id="contadorResumo" style="color:#666;">0 / 200 caracteres</small>
+      </div>
+
+      <button class="submit-btn" type="submit" id="btnSalao">
+        Enviar Inscrição
+      </button>
+
+    </form>
+
+    <div class="success" id="successSalao"></div>
+    <div class="error-msg" id="errorSalao"></div>
+
+  </div>
+
+  <!-- ========== FORM MCTI ========== -->
+  <div class="form-section" id="mcti">
+    <h2>Inscrição Trabalhos - MCTI</h2>
+    <div class="inscricao-numero">Número de inscrição: <span id="numeroMCTI">será gerado após o envio</span></div>
+    <form id="formMCTI">
+      <!-- (formulário MCTI — a ser integrado futuramente) -->
+      <p style="color:#666;">Formulário em breve.</p>
+      <button class="submit-btn" type="submit">Enviar Inscrição</button>
+    </form>
+    <div class="success" id="successMCTI"></div>
+  </div>
+
+  <!-- ========== FORM VISITANTES ========== -->
+  <div class="form-section" id="visitante">
+    <h2>Inscrição Visitantes MCTI</h2>
+    <div class="inscricao-numero">Número de inscrição: <span id="numeroVisitante">será gerado após o envio</span></div>
+    <form id="formVisitante">
+      <!-- (formulário Visitantes — a ser integrado futuramente) -->
+      <p style="color:#666;">Formulário em breve.</p>
+      <button class="submit-btn" type="submit">Enviar Inscrição</button>
+    </form>
+    <div class="success" id="successVisitante"></div>
+  </div>
+
+  <!-- ========== FORM FOGUETES ========== -->
+  <div class="form-section" id="foguete">
+    <h2>Inscrição Competição de Foguetes</h2>
+    <div class="inscricao-numero">Número de inscrição: <span id="numeroFoguete">será gerado após o envio</span></div>
+    <form id="formFoguete">
+      <!-- (formulário Foguetes — a ser integrado futuramente) -->
+      <p style="color:#666;">Formulário em breve.</p>
+      <button class="submit-btn" type="submit">Enviar Inscrição</button>
+    </form>
+    <div class="success" id="successFoguete"></div>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+  // ─── URL da API Google Apps Script ───────────────────────────────────────────
+  const API_URL = 'https://script.google.com/macros/s/AKfycbxEGfrCafjNJVBeFgJjXG9J3tyY5B0RKP5he5nx-KZ6dJlKG_e0l8q-WXhH5Qd1Facl/exec';
+
+  // ─── Abre / fecha formulários ─────────────────────────────────────────────────
+  function abrirFormulario(id) {
+    // Fecha todos
+    document.querySelectorAll('.form-section').forEach(el => el.classList.remove('active'));
+    // Abre o solicitado
+    const section = document.getElementById(id);
+    section.classList.add('active');
+    // Rola suavemente até o formulário
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ─── Contador de caracteres do resumo ────────────────────────────────────────
+  const resumoSalao = document.getElementById('resumoSalao');
+  const contador    = document.getElementById('contadorResumo');
+  resumoSalao.addEventListener('input', () => {
+    const len = resumoSalao.value.length;
+    contador.textContent = `${len} / 200 caracteres`;
+    contador.style.color = len < 100 ? '#c62828' : '#2e7d32';
+  });
+
+  // ─── Submit do Salão de Inovação ──────────────────────────────────────────────
+  document.getElementById('formSalao').addEventListener('submit', async function(e) {
+    e.preventDefault(); // impede reload da página
+
+    const btn        = document.getElementById('btnSalao');
+    const successDiv = document.getElementById('successSalao');
+    const errorDiv   = document.getElementById('errorSalao');
+
+    // Limpa mensagens anteriores
+    successDiv.style.display = 'none';
+    errorDiv.style.display   = 'none';
+
+    // Valida resumo (100–200 chars)
+    const resumo = resumoSalao.value.trim();
+    if (resumo.length < 100) {
+      errorDiv.textContent   = '⚠️ O resumo precisa ter no mínimo 100 caracteres.';
+      errorDiv.style.display = 'block';
+      resumoSalao.focus();
+      return;
+    }
+
+    // Pega área selecionada
+    const areaSelecionada = document.querySelector('input[name="areaSalao"]:checked');
+    if (!areaSelecionada) {
+      errorDiv.textContent   = '⚠️ Selecione uma área do conhecimento.';
+      errorDiv.style.display = 'block';
+      return;
+    }
+
+    // Monta objeto com os dados
+    const dados = {
+      formulario:       'Salão de Inovação',
+      nome:             document.getElementById('nomeSalao').value.trim(),
+      email:            document.getElementById('emailSalao').value.trim(),
+      titulo:           document.getElementById('tituloSalao').value.trim(),
+      orientador:       document.getElementById('orientadorSalao').value.trim(),
+      emailOrientador:  document.getElementById('emailOrientadorSalao').value.trim(),
+      coorientador:     document.getElementById('coorientadorSalao').value.trim(),
+      area:             areaSelecionada.value,
+      modalidade:       document.getElementById('modalidadeSalao').value,
+      resumo:           resumo,
+      dataHora:         new Date().toLocaleString('pt-BR')
+    };
+
+    // Desabilita botão durante o envio
+    btn.disabled    = true;
+    btn.textContent = '⏳ Enviando...';
+
+    try {
+      // Google Apps Script com no-cors: usamos fetch com mode no-cors
+      // e confirmamos sucesso localmente (a API não retorna body em no-cors)
+      await fetch(API_URL, {
+        method:  'POST',
+        mode:    'no-cors',            // necessário para Apps Script público
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(dados)
+      });
+
+      // Gera número de inscrição local (timestamp + 3 dígitos aleatórios)
+      const numero = 'SI-' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 900 + 100);
+      document.getElementById('numeroSalao').textContent = numero;
+
+      // Mostra mensagem de sucesso
+      successDiv.innerHTML =
+        `✅ Inscrição enviada com sucesso!<br>
+         Guarde seu número: <strong>${numero}</strong><br>
+         Um e-mail de confirmação pode ser enviado para <strong>${dados.email}</strong>.`;
+      successDiv.style.display = 'block';
+      successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // Reseta o formulário
+      document.getElementById('formSalao').reset();
+      contador.textContent = '0 / 200 caracteres';
+      contador.style.color = '#666';
+
+    } catch (err) {
+      console.error('Erro ao enviar:', err);
+      errorDiv.textContent   = '❌ Erro ao enviar a inscrição. Verifique sua conexão e tente novamente.';
+      errorDiv.style.display = 'block';
+    }
+
+    // Reativa botão
+    btn.disabled    = false;
+    btn.textContent = 'Enviar Inscrição';
+  });
+</script>
+
+</body>
+</html>
