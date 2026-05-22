@@ -453,24 +453,23 @@
     btn.textContent = '⏳ Enviando...';
 
     try {
-      // Google Apps Script com no-cors: usamos fetch com mode no-cors
-      // e confirmamos sucesso localmente (a API não retorna body em no-cors)
-      await fetch(API_URL, {
+      // Apps Script com CORS habilitado — lemos a resposta para pegar o número real
+      const resposta = await fetch(API_URL, {
         method:  'POST',
-        mode:    'no-cors',            // necessário para Apps Script público
-        headers: { 'Content-Type': 'application/json' },
+        mode:    'cors',
+        headers: { 'Content-Type': 'text/plain' }, // text/plain permite leitura no doPost
         body:    JSON.stringify(dados)
       });
 
-      // Gera número de inscrição local (timestamp + 3 dígitos aleatórios)
-      const numero = 'SI-' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 900 + 100);
+      const json   = await resposta.json();
+      const numero = 'SI-' + json.inscricao; // número idêntico ao salvo na planilha
       document.getElementById('numeroSalao').textContent = numero;
 
       // Mostra mensagem de sucesso
       successDiv.innerHTML =
         `✅ Inscrição enviada com sucesso!<br>
          Guarde seu número: <strong>${numero}</strong><br>
-         Um e-mail de confirmação pode ser enviado para <strong>${dados.email}</strong>.`;
+         Um e-mail de confirmação foi enviado para <strong>${dados.email}</strong>.`;
       successDiv.style.display = 'block';
       successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
