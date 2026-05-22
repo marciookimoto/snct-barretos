@@ -401,7 +401,7 @@
   resumoSalao.addEventListener('input', () => {
     const len = resumoSalao.value.length;
     contador.textContent = `${len} / 200 caracteres`;
-    contador.style.color = len < 100 ? '#c62828' : '#2e7d32';
+    contador.style.color = len < 1 ? '#c62828' : '#2e7d32';
   });
 
   // ─── Submit do Salão de Inovação ──────────────────────────────────────────────
