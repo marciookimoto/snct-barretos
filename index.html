@@ -326,8 +326,8 @@
       </div>
 
       <div>
-        <label>Resumo do trabalho (até 200 caracteres)</label>
-        <textarea id="resumoSalao" minlength="1" maxlength="200" required></textarea>
+        <label>Resumo do trabalho (100 a 200 caracteres)</label>
+        <textarea id="resumoSalao" maxlength="200" required></textarea>
         <small id="contadorResumo" style="color:#666;">0 / 200 caracteres</small>
       </div>
 
@@ -401,7 +401,7 @@
   resumoSalao.addEventListener('input', () => {
     const len = resumoSalao.value.length;
     contador.textContent = `${len} / 200 caracteres`;
-    contador.style.color = len < 1 ? '#c62828' : '#2e7d32';
+    contador.style.color = '#2e7d32';
   });
 
   // ─── Submit do Salão de Inovação ──────────────────────────────────────────────
@@ -416,14 +416,7 @@
     successDiv.style.display = 'none';
     errorDiv.style.display   = 'none';
 
-    // Valida resumo (100–200 chars)
     const resumo = resumoSalao.value.trim();
-    if (resumo.length < 100) {
-      errorDiv.textContent   = '⚠️ O resumo precisa ter no mínimo 100 caracteres.';
-      errorDiv.style.display = 'block';
-      resumoSalao.focus();
-      return;
-    }
 
     // Pega área selecionada
     const areaSelecionada = document.querySelector('input[name="areaSalao"]:checked');
@@ -434,8 +427,13 @@
     }
 
     // Monta objeto com os dados
+    // Número gerado no navegador — será o mesmo na tela, planilha e e-mail
+    const numero = 'SI-' + Date.now();
+    document.getElementById('numeroSalao').textContent = numero;
+
     const dados = {
       formulario:       'Salão de Inovação',
+      inscricao:        numero,
       nome:             document.getElementById('nomeSalao').value.trim(),
       email:            document.getElementById('emailSalao').value.trim(),
       titulo:           document.getElementById('tituloSalao').value.trim(),
@@ -454,16 +452,12 @@
 
     try {
       // Apps Script com CORS habilitado — lemos a resposta para pegar o número real
-      const resposta = await fetch(API_URL, {
+      await fetch(API_URL, {
         method:  'POST',
-        mode:    'cors',
-        headers: { 'Content-Type': 'text/plain' }, // text/plain permite leitura no doPost
+        mode:    'no-cors',
+        headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify(dados)
       });
-
-      const json   = await resposta.json();
-      const numero = 'SI-' + json.inscricao; // número idêntico ao salvo na planilha
-      document.getElementById('numeroSalao').textContent = numero;
 
       // Mostra mensagem de sucesso
       successDiv.innerHTML =
